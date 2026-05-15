@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import CustomCursor from "@/components/CustomCursor";
 
 export const metadata: Metadata = {
   title: "Pratyush Kumar | Full Stack Engineer",
@@ -14,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-vscode-bg text-white antialiased">
+        <CustomCursor />
         <div className="scanline" />
         {children}
       </body>

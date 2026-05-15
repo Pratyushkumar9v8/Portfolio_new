@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
+import { motion } from "framer-motion";
+import { Terminal, GitBranch, Check, ChevronRight } from "lucide-react";
 
 const jsonLines = [
   { indent: 0, content: "{", color: "text-white" },
@@ -98,7 +100,12 @@ export default function HeroSection() {
 
       <div className="relative max-w-7xl mx-auto px-6 pt-24 pb-16 grid lg:grid-cols-2 gap-12 items-center w-full">
         {/* LEFT — VSCode Panel */}
-        <div className="relative">
+        <motion.div 
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative"
+        >
           {/* Window chrome */}
           <div className="rounded-xl overflow-hidden border border-[#30363d] shadow-2xl shadow-black/50">
             {/* Title bar */}
@@ -109,7 +116,8 @@ export default function HeroSection() {
                 <div className="w-3 h-3 rounded-full bg-[#28c840] hover:bg-[#28c840]/80 transition-colors" />
               </div>
               <div className="flex-1 flex justify-center">
-                <div className="bg-[#161b22] rounded px-4 py-1 text-xs font-mono text-[#8b949e] border border-[#30363d]">
+                <div className="bg-[#161b22] rounded px-4 py-1 text-xs font-mono text-[#8b949e] border border-[#30363d] flex items-center gap-2">
+                  <Terminal size={12} />
                   portfolio.json — VS Code
                 </div>
               </div>
@@ -197,8 +205,14 @@ export default function HeroSection() {
             {/* Status bar */}
             <div className="bg-[#00ff88] px-4 py-1 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="text-black font-mono text-xs font-semibold">⎇ main</span>
-                <span className="text-black/60 font-mono text-xs">✓ No errors</span>
+                <span className="text-black font-mono text-xs font-semibold flex items-center gap-1">
+                  <GitBranch size={12} />
+                  main
+                </span>
+                <span className="text-black/60 font-mono text-xs flex items-center gap-1">
+                  <Check size={12} />
+                  No errors
+                </span>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-black/60 font-mono text-xs">JSON</span>
@@ -207,10 +221,15 @@ export default function HeroSection() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* RIGHT — Animated intro */}
-        <div className="relative flex flex-col gap-8">
+        <motion.div 
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="relative flex flex-col gap-8"
+        >
           {/* Matrix rain background */}
           <div className="absolute inset-0 rounded-xl overflow-hidden opacity-20">
             <MatrixRain />
@@ -220,7 +239,10 @@ export default function HeroSection() {
             {/* Greeting */}
             <div className="flex items-center gap-3 mb-4">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent to-[#00ff88]/50" />
-              <span className="font-mono text-[#00ff88] text-sm">$ whoami</span>
+              <span className="font-mono text-[#00ff88] text-sm flex items-center gap-2">
+                <Terminal size={14} />
+                whoami
+              </span>
               <div className="h-px flex-1 bg-gradient-to-l from-transparent to-[#00ff88]/50" />
             </div>
 
@@ -236,7 +258,7 @@ export default function HeroSection() {
             </h1>
 
             <div className="flex items-center gap-2 mb-6 font-mono">
-              <span className="text-[#00ff88]">&gt;</span>
+              <span className="text-[#00ff88]"><ChevronRight size={18} /></span>
               <span className="text-[#8b949e]">Currently working as </span>
               <span className="text-[#0ea5e9] typewriter-cursor pr-1">Full Stack Dev_</span>
             </div>
@@ -248,31 +270,38 @@ export default function HeroSection() {
 
             {/* Tech stack badges */}
             <div className="flex flex-wrap gap-2 mb-8">
-              {["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "AWS"].map((tech) => (
-                <span
+              {["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "AWS"].map((tech, i) => (
+                <motion.span
                   key={tech}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1 + i * 0.1 }}
                   className="px-3 py-1 rounded font-mono text-xs border border-[#30363d] bg-[#161b22] text-[#8b949e] hover:border-[#00ff88]/50 hover:text-[#00ff88] transition-all duration-200 cursor-default"
                 >
                   {tech}
-                </span>
+                </motion.span>
               ))}
             </div>
 
             {/* CTA buttons */}
             <div className="flex gap-4">
-              <button
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
                 className="group relative px-6 py-3 bg-[#00ff88] text-black font-mono font-bold text-sm rounded hover:bg-[#00ff88]/90 transition-all duration-200"
                 style={{ boxShadow: "0 0 20px rgba(0,255,136,0.3)" }}
               >
                 <span className="relative z-10">./view_projects</span>
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                 className="px-6 py-3 border border-[#30363d] text-[#8b949e] font-mono font-bold text-sm rounded hover:border-[#00ff88]/50 hover:text-[#00ff88] transition-all duration-200"
               >
                 ./contact_me
-              </button>
+              </motion.button>
             </div>
 
             {/* Stats */}
@@ -281,8 +310,14 @@ export default function HeroSection() {
                 { label: "years_exp", value: "5+" },
                 { label: "projects", value: "12" },
                 { label: "commits", value: "2.4k" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
+              ].map((stat, i) => (
+                <motion.div 
+                  key={stat.label} 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.5 + i * 0.2 }}
+                  className="text-center"
+                >
                   <div
                     className="font-mono font-bold text-2xl text-[#00ff88]"
                     style={{ textShadow: "0 0 10px rgba(0,255,136,0.5)" }}
@@ -290,18 +325,23 @@ export default function HeroSection() {
                     {stat.value}
                   </div>
                   <div className="font-mono text-xs text-[#8b949e] mt-1">{stat.label}</div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-float"
+      >
         <span className="font-mono text-xs text-[#8b949e]">scroll_down</span>
         <div className="w-px h-12 bg-gradient-to-b from-[#00ff88]/50 to-transparent" />
-      </div>
+      </motion.div>
     </section>
   );
 }

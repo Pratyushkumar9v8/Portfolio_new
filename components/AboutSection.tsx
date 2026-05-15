@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { User, Code, GraduationCap, Calendar, Briefcase, Zap, Globe, MessageCircle, Code2, MapPin, Mail, ExternalLink } from "lucide-react";
 
 const skills = [
   { category: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"], level: 95, color: "#00ff88" },
@@ -16,25 +18,27 @@ const timeline = [
 ];
 
 function SkillBar({ category, level, color, items, delay }: { category: string; level: number; color: string; items: string[]; delay: number }) {
-  const [animated, setAnimated] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setTimeout(() => setAnimated(true), delay); },
-      { threshold: 0.3 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [delay]);
   return (
-    <div ref={ref} className="group">
+    <motion.div 
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: delay / 1000 }}
+      className="group"
+    >
       <div className="flex items-center justify-between mb-2">
         <span className="font-mono text-sm font-semibold" style={{ color }}>{category}</span>
         <span className="font-mono text-xs text-[#8b949e]">{level}%</span>
       </div>
       <div className="h-2 bg-[#0d1117] rounded-full overflow-hidden mb-3 border border-[#30363d]">
-        <div className="h-full rounded-full transition-all duration-1000 ease-out"
-          style={{ width: animated ? `${level}%` : "0%", background: `linear-gradient(90deg, ${color}80, ${color})`, boxShadow: `0 0 8px ${color}60` }} />
+        <motion.div 
+          initial={{ width: 0 }}
+          whileInView={{ width: `${level}%` }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.5, ease: "easeOut", delay: delay / 1000 + 0.3 }}
+          className="h-full rounded-full"
+          style={{ background: `linear-gradient(90deg, ${color}80, ${color})`, boxShadow: `0 0 8px ${color}60` }} 
+        />
       </div>
       <div className="flex flex-wrap gap-1.5">
         {items.map((item) => (
@@ -42,7 +46,7 @@ function SkillBar({ category, level, color, items, delay }: { category: string; 
             style={{ color: color + "cc", borderColor: color + "30", background: color + "08" }}>{item}</span>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -141,28 +145,48 @@ export default function AboutSection() {
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div className="mb-16 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-16"
+        >
           <div className="flex items-center gap-4 mb-4">
-            <div className="font-mono text-[#00ff88] text-sm"><span className="text-[#8b949e]">// </span>03. ABOUT</div>
+            <div className="font-mono text-[#00ff88] text-sm flex items-center gap-2">
+              <User size={14} className="text-[#8b949e]" />
+              <span className="text-[#8b949e]">// </span>03. ABOUT
+            </div>
             <div className="h-px flex-1 bg-gradient-to-r from-[#00ff88]/30 to-transparent" />
           </div>
           <h2 className="font-mono font-bold text-4xl text-white">
-            The <span className="text-[#00ff88]">developer</span> behind the code
+            Beyond the <span className="text-[#00ff88]">terminal_</span>
           </h2>
-        </div>
+        </motion.div>
+
 
         {/* PHOTO + ABOUT ME */}
-        <div className="grid lg:grid-cols-[300px_1fr] gap-10 mb-16 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(40px)", transitionDelay: "0.15s" }}>
+        <div className="grid lg:grid-cols-[300px_1fr] gap-10 mb-16">
 
           {/* Photo */}
-          <div className="flex justify-center lg:justify-start">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex justify-center lg:justify-start"
+          >
             <AvatarFrame />
-          </div>
+          </motion.div>
 
           {/* About me */}
-          <div className="flex flex-col justify-center">
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="flex flex-col justify-center"
+          >
             <div className="rounded-xl border border-[#30363d] bg-[#161b22] overflow-hidden">
               {/* Fake editor tabs */}
               <div className="bg-[#010409] flex border-b border-[#30363d] px-4 py-2 items-center gap-3">
@@ -223,16 +247,21 @@ export default function AboutSection() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* SKILLS + TIMELINE */}
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Timeline */}
-          <div className="transition-all duration-700 delay-300"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-30px)" }}>
-            <div className="font-mono text-sm text-[#8b949e] mb-4">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="font-mono text-sm text-[#8b949e] mb-4 flex items-center gap-2">
               <span className="text-[#00ff88]">$</span> cat experience.log
+              <Briefcase size={14} className="ml-auto" />
             </div>
             <div className="relative">
               <div className="absolute left-[52px] top-0 bottom-0 w-px bg-gradient-to-b from-[#00ff88]/50 via-[#30363d] to-transparent" />
@@ -252,14 +281,20 @@ export default function AboutSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Skills */}
-          <div className="space-y-6 transition-all duration-700 delay-500"
-            style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(30px)" }}>
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="space-y-6"
+          >
             <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-6">
-              <div className="font-mono text-sm text-[#8b949e] mb-6">
+              <div className="font-mono text-sm text-[#8b949e] mb-6 flex items-center gap-2">
                 <span className="text-[#00ff88]">$</span> cat skills.json | jq
+                <Code size={14} className="ml-auto" />
               </div>
               <div className="space-y-6">
                 {skills.map((skill, i) => (
@@ -269,9 +304,16 @@ export default function AboutSection() {
             </div>
 
             {/* Fun facts */}
-            <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-5">
-              <div className="font-mono text-sm text-[#8b949e] mb-4">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="rounded-xl border border-[#30363d] bg-[#161b22] p-5"
+            >
+              <div className="font-mono text-sm text-[#8b949e] mb-4 flex items-center gap-2">
                 <span className="text-[#00ff88]">$</span> ./fun_facts.sh
+                <Zap size={14} className="ml-auto" />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {[
@@ -287,8 +329,8 @@ export default function AboutSection() {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

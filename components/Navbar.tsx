@@ -1,5 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { Terminal } from "lucide-react";
 
 const navLinks = ["Home", "Projects", "About", "Resume", "Contact"];
 
@@ -8,7 +10,22 @@ export default function Navbar() {
   const [active, setActive] = useState("Home");
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    const handleScroll = () => {
+      const scrollPos = window.scrollY;
+      setScrolled(scrollPos > 40);
+      
+      // Update active link based on scroll position
+      const sections = navLinks.map(link => document.getElementById(link.toLowerCase()));
+      const currentSection = sections.find(section => {
+        if (!section) return false;
+        const rect = section.getBoundingClientRect();
+        return rect.top <= 100 && rect.bottom >= 100;
+      });
+      
+      if (currentSection) {
+        setActive(currentSection.id.charAt(0).toUpperCase() + currentSection.id.slice(1));
+      }
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -20,7 +37,10 @@ export default function Navbar() {
   };
 
   return (
-    <nav
+    <motion.nav
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled
           ? "bg-[#010409]/90 backdrop-blur-md border-b border-[#30363d]"
@@ -31,7 +51,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded bg-[#00ff88]/10 border border-[#00ff88]/30 flex items-center justify-center">
-            <span className="text-[#00ff88] font-mono text-sm font-bold">&gt;_</span>
+            <Terminal size={14} className="text-[#00ff88]" />
           </div>
           <span className="font-mono text-[#00ff88] font-semibold tracking-wider text-sm">
             dev<span className="text-white">.portfolio</span>
@@ -51,7 +71,10 @@ export default function Navbar() {
               }`}
             >
               {active === link && (
-                <span className="absolute inset-0 bg-[#00ff88]/5 border border-[#00ff88]/20 rounded" />
+                <motion.span 
+                  layoutId="nav-active"
+                  className="absolute inset-0 bg-[#00ff88]/5 border border-[#00ff88]/20 rounded" 
+                />
               )}
               <span className="relative">
                 {active === link && <span className="text-[#00ff88]/60 mr-1">./</span>}
@@ -67,6 +90,6 @@ export default function Navbar() {
           <span className="font-mono text-xs text-[#8b949e]">available for hire</span>
         </div>
       </div>
-    </nav>
+    </motion.nav>
   );
 }

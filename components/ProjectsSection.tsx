@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Star, GitBranch, Terminal, ExternalLink, Code2 } from "lucide-react";
 
 const projects = [
   {
@@ -176,12 +178,16 @@ export default function ProjectsSection() {
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div
-          className="mb-16 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="font-mono text-[#00ff88] text-sm">
+            <div className="font-mono text-[#00ff88] text-sm flex items-center gap-2">
+              <Code2 size={14} className="text-[#8b949e]" />
               <span className="text-[#8b949e]">// </span>02. PROJECTS
             </div>
             <div className="h-px flex-1 bg-gradient-to-r from-[#00ff88]/30 to-transparent" />
@@ -192,23 +198,24 @@ export default function ProjectsSection() {
           <h2 className="font-mono font-bold text-4xl text-white">
             Built with <span className="text-[#00ff88]">&lt;passion/&gt;</span>
           </h2>
-        </div>
+        </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Project cards - left 2 columns */}
           <div className="lg:col-span-2 grid sm:grid-cols-2 gap-4">
             {projects.map((project, i) => (
-              <div
+              <motion.div
                 key={project.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
                 onMouseEnter={() => handleProjectHover(project.name)}
                 onMouseLeave={() => setActiveProject(null)}
-                className="group relative rounded-xl border border-[#30363d] bg-[#161b22] p-5 cursor-pointer transition-all duration-300 hover:border-opacity-100 overflow-hidden"
-                style={{
-                  opacity: visible ? 1 : 0,
-                  transform: visible ? "translateY(0)" : "translateY(40px)",
-                  transition: `opacity 0.6s ease ${i * 0.1}s, transform 0.6s ease ${i * 0.1}s, border-color 0.3s ease, box-shadow 0.3s ease`,
-                  borderColor: activeProject === project.name ? project.color + "50" : undefined,
-                  boxShadow: activeProject === project.name ? `0 0 20px ${project.color}20` : undefined,
+                className="group relative rounded-xl border border-[#30363d] bg-[#161b22] p-5 cursor-pointer overflow-hidden"
+                animate={{
+                  borderColor: activeProject === project.name ? project.color + "50" : "#30363d",
+                  boxShadow: activeProject === project.name ? `0 0 20px ${project.color}20` : "none",
                 }}
               >
                 {/* Glow on hover */}
@@ -250,18 +257,19 @@ export default function ProjectsSection() {
                 {/* Footer stats */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3 font-mono text-xs text-[#8b949e]">
-                    <span>⭐ {project.stars}</span>
-                    <span>⎇ {project.commits} commits</span>
+                    <span className="flex items-center gap-1"><Star size={12} className="text-vscode-yellow" /> {project.stars}</span>
+                    <span className="flex items-center gap-1"><GitBranch size={12} /> {project.commits}</span>
                   </div>
-                  <a
+                  <motion.a
+                    whileHover={{ x: 5 }}
                     href={project.link}
-                    className="font-mono text-xs transition-all duration-200"
+                    className="flex items-center gap-1 font-mono text-xs transition-all duration-200"
                     style={{ color: project.color }}
                   >
-                    ./explore →
-                  </a>
+                    ./explore <ExternalLink size={12} />
+                  </motion.a>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 

@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Download, FileText, MapPin, Mail, Globe, MessageCircle, ExternalLink, Briefcase, GraduationCap, Award, Code2 } from "lucide-react";
 
 const experience = [
   {
@@ -89,14 +91,14 @@ export default function ResumeSection() {
     setPrinting(true);
     setTimeout(() => {
       setPrinting(false);
-      // In production: window.open("/Naveen_Mastamardi_Resume.pdf")
+      // In production: window.open("/Pratyush_Resume.pdf")
     }, 2000);
   };
 
   const active = experience.find((e) => e.id === activeExp)!;
 
   return (
-    <section id="resume" ref={sectionRef} className="relative py-24 overflow-hidden">
+    <section id="resume" className="relative py-24 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-[#0d1117] via-[#010409]/60 to-[#0d1117]" />
       {/* Grid bg */}
       <div className="absolute inset-0"
@@ -104,11 +106,19 @@ export default function ResumeSection() {
 
       <div className="relative max-w-7xl mx-auto px-6">
         {/* Header */}
-        <div className="mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)" }}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="mb-14 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4"
+        >
           <div>
             <div className="flex items-center gap-4 mb-3">
-              <div className="font-mono text-[#00ff88] text-sm"><span className="text-[#8b949e]">// </span>04. RESUME</div>
+              <div className="font-mono text-[#00ff88] text-sm flex items-center gap-2">
+                <FileText size={14} className="text-[#8b949e]" />
+                <span className="text-[#8b949e]">// </span>04. RESUME
+              </div>
               <div className="h-px flex-1 bg-gradient-to-r from-[#00ff88]/30 to-transparent" />
             </div>
             <h2 className="font-mono font-bold text-4xl text-white">
@@ -116,7 +126,9 @@ export default function ResumeSection() {
             </h2>
           </div>
           {/* Download button */}
-          <button
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleDownload}
             className="group flex items-center gap-3 px-5 py-3 rounded-xl border border-[#00ff88]/30 bg-[#00ff88]/5 font-mono text-sm text-[#00ff88] hover:bg-[#00ff88]/10 transition-all duration-200 w-fit"
             style={{ boxShadow: "0 0 15px rgba(0,255,136,0.1)" }}>
@@ -127,20 +139,21 @@ export default function ResumeSection() {
               </>
             ) : (
               <>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
+                <Download size={16} />
                 ./download_resume.pdf
               </>
             )}
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
         {/* Resume card — mimics a PDF viewer */}
-        <div className="rounded-xl border border-[#30363d] bg-[#010409] overflow-hidden transition-all duration-700"
-          style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(40px)", transitionDelay: "0.15s" }}>
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="rounded-xl border border-[#30363d] bg-[#010409] overflow-hidden"
+        >
 
           {/* PDF viewer chrome */}
           <div className="bg-[#161b22] border-b border-[#30363d] px-5 py-3 flex items-center justify-between">
@@ -151,7 +164,7 @@ export default function ResumeSection() {
                 <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
               </div>
               <div className="font-mono text-xs text-[#8b949e] ml-2 flex items-center gap-2">
-                <span className="text-[#ff5f57]">PDF</span>
+                <span className="text-[#ff5f57] font-bold">PDF</span>
                 <span>Pratyush_Resume.pdf</span>
               </div>
             </div>
@@ -168,11 +181,11 @@ export default function ResumeSection() {
                   <div className="font-mono text-xs text-[#8b949e] mb-1">$ whoami</div>
                   <h3 className="font-mono font-bold text-3xl text-white mb-1">Pratyush Kumar</h3>
                   <div className="font-mono text-[#00ff88] text-base">Full Stack Engineer</div>
-                  <div className="flex flex-wrap gap-3 mt-3 font-mono text-xs text-[#8b949e]">
-                    <span>📍 India</span>
-                    <span>✉ naveen@example.com</span>
-                    <span>🔗 github.com/Pratyushkumar9v8</span>
-                    <span>💼 linkedin.com/in/naveen-m</span>
+                  <div className="flex flex-wrap gap-4 mt-3 font-mono text-xs text-[#8b949e]">
+                    <span className="flex items-center gap-1"><MapPin size={12} /> India</span>
+                    <span className="flex items-center gap-1"><Mail size={12} /> hello@pratyush.dev</span>
+                    <span className="flex items-center gap-1"><Code2 size={12} /> github.com/pratyush</span>
+                    <span className="flex items-center gap-1"><Globe size={12} /> linkedin.com/in/pratyush</span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-2 text-right">
@@ -201,7 +214,9 @@ export default function ResumeSection() {
                 {/* Experience */}
                 <div>
                   <div className="flex items-center gap-3 mb-5">
-                    <span className="font-mono text-xs text-[#00ff88] bg-[#00ff88]/10 border border-[#00ff88]/20 px-2 py-0.5 rounded">EXPERIENCE</span>
+                    <span className="font-mono text-xs text-[#00ff88] bg-[#00ff88]/10 border border-[#00ff88]/20 px-2 py-0.5 rounded flex items-center gap-2">
+                      <Briefcase size={12} /> EXPERIENCE
+                    </span>
                     <div className="h-px flex-1 bg-[#30363d]" />
                   </div>
 
@@ -219,36 +234,47 @@ export default function ResumeSection() {
                   </div>
 
                   {/* Active experience */}
-                  <div className="rounded-xl border p-5 transition-all duration-300"
-                    style={{ borderColor: active.color + "30", background: active.color + "05" }}>
-                    <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
-                      <div>
-                        <div className="font-mono font-bold text-white text-base">{active.title}</div>
-                        <div className="font-mono text-sm" style={{ color: active.color }}>{active.company}</div>
+                  <AnimatePresence mode="wait">
+                    <motion.div 
+                      key={activeExp}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 10 }}
+                      transition={{ duration: 0.3 }}
+                      className="rounded-xl border p-5"
+                      style={{ borderColor: active.color + "30", background: active.color + "05" }}
+                    >
+                      <div className="flex items-start justify-between mb-3 flex-wrap gap-2">
+                        <div>
+                          <div className="font-mono font-bold text-white text-base">{active.title}</div>
+                          <div className="font-mono text-sm" style={{ color: active.color }}>{active.company}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="font-mono text-xs text-[#8b949e]">{active.period}</div>
+                          <span className="font-mono text-xs px-2 py-0.5 rounded border mt-1 inline-block"
+                            style={{ color: active.color, borderColor: active.color + "30", background: active.color + "10" }}>
+                            {active.type}
+                          </span>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <div className="font-mono text-xs text-[#8b949e]">{active.period}</div>
-                        <span className="font-mono text-xs px-2 py-0.5 rounded border mt-1 inline-block"
-                          style={{ color: active.color, borderColor: active.color + "30", background: active.color + "10" }}>
-                          {active.type}
-                        </span>
-                      </div>
-                    </div>
-                    <ul className="space-y-2">
-                      {active.bullets.map((b, i) => (
-                        <li key={i} className="flex items-start gap-2 font-sans text-sm text-[#8b949e]">
-                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: active.color }} />
-                          {b}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                      <ul className="space-y-2">
+                        {active.bullets.map((b, i) => (
+                          <li key={i} className="flex items-start gap-2 font-sans text-sm text-[#8b949e]">
+                            <span className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: active.color }} />
+                            {b}
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.div>
+                  </AnimatePresence>
                 </div>
 
                 {/* Tech stack */}
                 <div>
                   <div className="flex items-center gap-3 mb-5">
-                    <span className="font-mono text-xs text-[#0ea5e9] bg-[#0ea5e9]/10 border border-[#0ea5e9]/20 px-2 py-0.5 rounded">TECH STACK</span>
+                    <span className="font-mono text-xs text-[#0ea5e9] bg-[#0ea5e9]/10 border border-[#0ea5e9]/20 px-2 py-0.5 rounded flex items-center gap-2">
+                      <Code2 size={12} /> TECH STACK
+                    </span>
                     <div className="h-px flex-1 bg-[#30363d]" />
                   </div>
                   <div className="space-y-3">
@@ -257,9 +283,13 @@ export default function ResumeSection() {
                         <span className="font-mono text-xs text-[#8b949e] w-24 flex-shrink-0 pt-0.5">{cat.category}</span>
                         <div className="flex flex-wrap gap-1.5">
                           {cat.items.map((item) => (
-                            <span key={item} className="font-mono text-xs px-2 py-0.5 rounded bg-[#161b22] border border-[#30363d] text-[#8b949e] hover:text-[#00ff88] hover:border-[#00ff88]/30 transition-colors">
+                            <motion.span 
+                              key={item} 
+                              whileHover={{ scale: 1.05, color: "#00ff88" }}
+                              className="font-mono text-xs px-2 py-0.5 rounded bg-[#161b22] border border-[#30363d] text-[#8b949e] hover:border-[#00ff88]/30 transition-colors cursor-default"
+                            >
                               {item}
-                            </span>
+                            </motion.span>
                           ))}
                         </div>
                       </div>
@@ -273,7 +303,9 @@ export default function ResumeSection() {
                 {/* Education */}
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="font-mono text-xs text-[#ffa657] bg-[#ffa657]/10 border border-[#ffa657]/20 px-2 py-0.5 rounded">EDUCATION</span>
+                    <span className="font-mono text-xs text-[#ffa657] bg-[#ffa657]/10 border border-[#ffa657]/20 px-2 py-0.5 rounded flex items-center gap-2">
+                      <GraduationCap size={12} /> EDUCATION
+                    </span>
                     <div className="h-px flex-1 bg-[#30363d]" />
                   </div>
                   {education.map((edu, i) => (
@@ -289,19 +321,25 @@ export default function ResumeSection() {
                 {/* Certifications */}
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="font-mono text-xs text-[#a855f7] bg-[#a855f7]/10 border border-[#a855f7]/20 px-2 py-0.5 rounded">CERTS</span>
+                    <span className="font-mono text-xs text-[#a855f7] bg-[#a855f7]/10 border border-[#a855f7]/20 px-2 py-0.5 rounded flex items-center gap-2">
+                      <Award size={12} /> CERTS
+                    </span>
                     <div className="h-px flex-1 bg-[#30363d]" />
                   </div>
                   <div className="space-y-3">
                     {certifications.map((cert, i) => (
-                      <div key={i} className="rounded-xl border border-[#30363d] bg-[#161b22] p-4 hover:border-[#a855f7]/20 transition-colors">
+                      <motion.div 
+                        key={i} 
+                        whileHover={{ x: 5 }}
+                        className="rounded-xl border border-[#30363d] bg-[#161b22] p-4 hover:border-[#a855f7]/20 transition-colors cursor-default"
+                      >
                         <div className="flex items-start gap-2 mb-1">
                           <span className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0" style={{ background: cert.color }} />
                           <div className="font-mono text-xs text-white font-semibold leading-snug">{cert.name}</div>
                         </div>
                         <div className="font-mono text-xs text-[#8b949e] pl-4">{cert.issuer}</div>
                         <div className="font-mono text-xs pl-4 mt-1" style={{ color: cert.color }}>{cert.year}</div>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
@@ -310,21 +348,26 @@ export default function ResumeSection() {
                 <div className="rounded-xl border border-[#30363d] bg-[#161b22] p-4">
                   <div className="font-mono text-xs text-[#8b949e] mb-3">$ ls ./profiles</div>
                   {[
-                    { label: "GitHub", handle: "github.com/naveen-m", color: "#00ff88" },
-                    { label: "LinkedIn", handle: "linkedin.com/in/naveen-m", color: "#0ea5e9" },
-                    { label: "Portfolio", handle: "naveen.dev", color: "#a855f7" },
+                    { label: "GitHub", handle: "github.com/pratyush", color: "#00ff88", href: "#" },
+                    { label: "LinkedIn", handle: "linkedin.com/in/pratyush", color: "#0ea5e9", href: "#" },
+                    { label: "Portfolio", handle: "pratyush.dev", color: "#a855f7", href: "#" },
                   ].map((link) => (
-                    <a key={link.label} href="#"
+                    <motion.a 
+                      key={link.label} 
+                      href={link.href}
+                      whileHover={{ x: 2 }}
                       className="flex items-center justify-between py-2 border-b border-[#30363d] last:border-0 group">
                       <span className="font-mono text-xs text-[#8b949e] group-hover:text-white transition-colors">{link.label}</span>
-                      <span className="font-mono text-xs group-hover:translate-x-0.5 transition-transform" style={{ color: link.color }}>{link.handle} →</span>
-                    </a>
+                      <span className="font-mono text-xs group-hover:translate-x-0.5 transition-transform flex items-center gap-1" style={{ color: link.color }}>
+                        {link.handle} <ExternalLink size={10} />
+                      </span>
+                    </motion.a>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
