@@ -35,3 +35,4 @@ next-env.d.ts
 # OS metadata
 .DS_Store
 *.pem
+package-lock.json

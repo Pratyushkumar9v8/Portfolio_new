@@ -15,7 +15,7 @@ const jsonLines = [
   { indent: 3, value: '"Node.js"', valueColor: "text-vscode-green", noKey: true },
   { indent: 3, value: '"AWS"', valueColor: "text-vscode-green", noKey: true },
   { indent: 2, content: "]", color: "text-white", sub: true },
-  { indent: 1, key: '"experience"', value: '"5 years"', keyColor: "text-vscode-blue", valueColor: "text-vscode-purple" },
+  { indent: 1, key: '"experience"', value: '"2 years"', keyColor: "text-vscode-blue", valueColor: "text-vscode-purple" },
   { indent: 1, key: '"projects"', value: "12", keyColor: "text-vscode-blue", valueColor: "text-vscode-orange", noQuoteVal: true },
   { indent: 1, key: '"coffee_per_day"', value: "∞", keyColor: "text-vscode-blue", valueColor: "text-vscode-red", noQuoteVal: true },
   { indent: 0, content: "}", color: "text-white" },

@@ -152,7 +152,7 @@ export default function ResumeSection() {
               </div>
               <div className="font-mono text-xs text-[#8b949e] ml-2 flex items-center gap-2">
                 <span className="text-[#ff5f57]">PDF</span>
-                <span>Naveen_Mastamardi_Resume.pdf</span>
+                <span>Pratyush_Resume.pdf</span>
               </div>
             </div>
             <div className="font-mono text-xs text-[#8b949e]">Page 1 / 1</div>
@@ -171,7 +171,7 @@ export default function ResumeSection() {
                   <div className="flex flex-wrap gap-3 mt-3 font-mono text-xs text-[#8b949e]">
                     <span>📍 India</span>
                     <span>✉ naveen@example.com</span>
-                    <span>🔗 github.com/naveen-m</span>
+                    <span>🔗 github.com/Pratyushkumar9v8</span>
                     <span>💼 linkedin.com/in/naveen-m</span>
                   </div>
                 </div>

@@ -9,10 +9,10 @@ const skills = [
 ];
 
 const timeline = [
-  { year: "2024", role: "Senior Full Stack Engineer", company: "TechCorp Inc", description: "Led a team of 6 engineers to rebuild the core product from monolith to microservices." },
-  { year: "2022", role: "Full Stack Developer", company: "StartupXYZ", description: "Built the entire frontend and backend infrastructure for a B2B SaaS product from scratch." },
-  { year: "2020", role: "Frontend Developer", company: "Agency Co", description: "Developed pixel-perfect, accessible web apps for Fortune 500 clients." },
-  { year: "2019", role: "B.Tech Computer Science", company: "University", description: "Specialized in distributed systems and software engineering principles." },
+  // { year: "2024", role: "Senior Full Stack Engineer", company: "TechCorp Inc", description: "Led a team of 6 engineers to rebuild the core product from monolith to microservices." },
+  // { year: "2022", role: "Full Stack Developer", company: "StartupXYZ", description: "Built the entire frontend and backend infrastructure for a B2B SaaS product from scratch." },
+  // { year: "2020", role: "Frontend Developer", company: "Agency Co", description: "Developed pixel-perfect, accessible web apps for Fortune 500 clients." },
+  { year: "2024", role: "B.Tech Computer Science", company: "NIT PATNA", description: "Specialized in cyber security." },
 ];
 
 function SkillBar({ category, level, color, items, delay }: { category: string; level: number; color: string; items: string[]; delay: number }) {
